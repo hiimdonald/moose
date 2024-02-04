@@ -10,9 +10,39 @@
       <p>Last seen on: {{ user.last_seen }}</p>
       {% endif %} {% if user == current_user %}
       <p><a href="{{ url_for('edit_profile') }}">Edit your profile</a></p>
-      {% elif not current_user.is_following(user) %} {% endif %}
+      {% endif %}
     </td>
   </tr>
 </table>
 
-{% endblock %}
+<!-- Display user's game sessions -->
+<h2>Game Sessions</h2>
+{% if game_sessions %}
+<table class="table">
+  <thead>
+    <tr>
+      <th>Date</th>
+      <th>Operation</th>
+      <th>Difficulty</th>
+      <th>Correct</th>
+      <th>Wrong</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for session in game_sessions %}
+    <!-- Assume session.details or an equivalent property contains the aggregated data -->
+    {% for detail in session.details %}
+    <tr>
+      <td>{{ session.session_date.strftime('%Y-%m-%d') }}</td>
+      <td>{{ detail.operation_type }}</td>
+      <td>{{ detail.difficulty_level }}</td>
+      <td>{{ detail.correct_count }}</td>
+      <!-- Ensure these properties exist -->
+      <td>{{ detail.wrong_count }}</td>
+    </tr>
+    {% endfor %} {% endfor %}
+  </tbody>
+</table>
+{% else %}
+<p>No game sessions found.</p>
+{% endif %} {% endblock %}

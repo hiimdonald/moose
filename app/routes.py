@@ -1,5 +1,5 @@
 import os
-from datetime import datetime, timezone
+from datetime import datetime, timezone, timedelta
 from urllib.parse import urlsplit
 from flask import render_template, flash, redirect, url_for, request, jsonify
 from flask_login import login_user, logout_user, current_user, login_required
@@ -12,7 +12,7 @@ from app.forms import (
     ResetPasswordRequestForm,
     ResetPasswordForm,
 )
-from app.models import User, Post
+from app.models import User, Post, GameDetail, GameSession
 from app.email import send_password_reset_email
 
 
@@ -173,12 +173,16 @@ def reset_password(token):
 @app.route("/user/<username>")
 @login_required
 def user(username):
-    user = db.first_or_404(sa.select(User).where(User.username == username))
-    posts = [
-        {"author": user, "body": "Test post #1"},
-        {"author": user, "body": "Test post #2"},
-    ]
-    return render_template("user.html", user=user, posts=posts)
+    user = User.query.filter_by(username=username).first_or_404()
+    game_sessions = user.game_sessions.order_by(
+        GameSession.session_date.desc()
+    )
+
+    # Assuming you have aggregated data stored, simply pass game_sessions to the template
+    # If you need to aggregate data here, make sure your queries are correct and that
+    # session.details contains the expected GameDetail instances
+
+    return render_template("user.html", user=user, game_sessions=game_sessions)
 
 
 @app.route("/edit_profile", methods=["GET", "POST"])
@@ -199,3 +203,48 @@ def edit_profile():
     return render_template(
         "edit_profile.html", title="Edit Profile", form=form
     )
+
+
+@app.route("/submit_game", methods=["POST"])
+@login_required
+def submit_game():
+    try:
+        data = request.json
+        print("Received data:", data)  # Verify data is received correctly
+
+        # Find the most recent session for the current user within the last 24 hours
+        last_24_hours = datetime.now() - timedelta(days=1)
+        recent_session = (
+            GameSession.query.filter(
+                GameSession.user_id == current_user.id,
+                GameSession.session_date >= last_24_hours,
+            )
+            .order_by(GameSession.session_date.desc())
+            .first()
+        )
+
+        # If a session exists, update it
+        if recent_session:
+            recent_session.total_problems += data["total_problems"]
+            recent_session.problems_correct += data["problems_correct"]
+            recent_session.problems_wrong += data["problems_wrong"]
+        else:
+            # If no session exists within the last 24 hours, create a new one
+            new_session = GameSession(
+                user_id=current_user.id,
+                session_date=datetime.now(),
+                total_problems=data["total_problems"],
+                problems_correct=data["problems_correct"],
+                problems_wrong=data["problems_wrong"],
+            )
+            db.session.add(new_session)
+
+        print("Attempting to commit session")
+        db.session.commit()
+        print("Game results submitted successfully")
+        return jsonify({"message": "Game results submitted successfully!"})
+
+    except Exception as e:
+        # Log the exception and return an error response
+        print(f"Error submitting game results: {e}")
+        return jsonify({"error": "Failed to submit game results"}), 500

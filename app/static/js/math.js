@@ -6,6 +6,10 @@ let numCorrect = 0,
   score = 0;
 let selectedOption = null; // Keep track of the selected option
 
+const csrfToken = document
+  .querySelector('meta[name="csrf-token"]')
+  .getAttribute("content");
+
 // Event listener for each option
 options.forEach((option) => {
   option.addEventListener("click", function () {
@@ -23,6 +27,10 @@ document.getElementById("submit-answer").addEventListener("click", function () {
     alert("Please select an answer before submitting.");
   } else {
     checkAnswer(selectedOption);
+
+    // Call submitGameResults to send the game data to the server
+    submitGameResults();
+
     // Reset selectedOption after submission
     selectedOption.classList.remove("option-selected");
     selectedOption = null;
@@ -154,6 +162,32 @@ function resetDisplayForNewQuestion() {
 
   // Reset selectedOption for the next question
   selectedOption = null;
+}
+
+function submitGameResults() {
+  const data = {
+    total_problems: numCorrect + numWrong,
+    problems_correct: numCorrect,
+    problems_wrong: numWrong,
+  };
+
+  fetch("/submit_game", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      "X-CSRFToken": csrfToken, // Use the csrfToken variable here
+    },
+    body: JSON.stringify(data),
+  })
+    .then((response) => response.json())
+    .then((data) => {
+      console.log("Success:", data);
+      // Handle success - e.g., display a message or redirect
+    })
+    .catch((error) => {
+      console.error("Error:", error);
+      // Handle errors here
+    });
 }
 
 // Initially start the game

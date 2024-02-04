@@ -58,6 +58,10 @@ class User(UserMixin, db.Model):
             return
         return db.session.get(User, id)
 
+    game_sessions = db.relationship(
+        "GameSession", backref="user", lazy="dynamic"
+    )
+
 
 @login.user_loader
 def load_user(id):
@@ -78,3 +82,36 @@ class Post(db.Model):
 
     def __repr__(self):
         return "<Post {}>".format(self.body)
+
+
+class GameSession(db.Model):
+    id = so.mapped_column(sa.Integer, primary_key=True)
+    user_id = so.mapped_column(
+        sa.Integer, sa.ForeignKey("user.id"), index=True
+    )
+    session_date = so.mapped_column(
+        sa.Date, default=datetime.now(timezone.utc), index=True
+    )
+    total_problems = so.mapped_column(sa.Integer)
+    problems_correct = so.mapped_column(sa.Integer)
+    problems_wrong = so.mapped_column(sa.Integer)
+    details = so.relationship(
+        "GameDetail", back_populates="session", lazy=True
+    )
+
+    def __repr__(self):
+        return f"<GameSession {self.id} User {self.user_id}>"
+
+
+class GameDetail(db.Model):
+    id = so.mapped_column(sa.Integer, primary_key=True)
+    session_id = so.mapped_column(
+        sa.Integer, sa.ForeignKey("game_session.id"), index=True
+    )
+    operation_type = db.Column(db.String(20), index=True)
+    difficulty_level = db.Column(db.String(20), index=True)
+    result = so.mapped_column(sa.Boolean)
+    session = so.relationship("GameSession", back_populates="details")
+
+    def __repr__(self):
+        return f"<GameDetail {self.id} Session {self.session_id}>"
