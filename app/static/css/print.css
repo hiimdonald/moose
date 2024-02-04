@@ -1,0 +1,5 @@
+@media print {
+  row {
+    break-inside: avoid;
+  }
+}

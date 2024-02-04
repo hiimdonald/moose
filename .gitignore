@@ -1,0 +1,14 @@
+/.DS_Store
+/.vscode
+static/.DS_Store
+venv
+.venv
+__pycache__
+scratch.py
+
+config.py
+app/__pycache__
+migrations
+.env
+.flaskenv
+logs

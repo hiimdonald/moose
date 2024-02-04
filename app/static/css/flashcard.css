@@ -1,0 +1,46 @@
+/* FLASH CARDS */
+#flashcard {
+  perspective: 1500px;
+}
+
+#flashcard .card-body {
+  transition: transform 0.5s ease-in-out;
+  transform-style: preserve-3d;
+  position: relative;
+  height: 300px;
+  width: 500px;
+  cursor: grab;
+}
+
+#flashcard .front,
+#flashcard .back {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  backface-visibility: hidden;
+}
+
+#flashcard .back {
+  transform: rotateY(180deg);
+}
+
+#flashcard.flipped .card-body {
+  transform: rotateY(180deg);
+}
+
+#flashcard .card-title {
+  font-size: 5rem;
+  font-weight: bold;
+}
+
+#flashcard .btn {
+  display: block;
+  margin: 0 auto;
+  font-size: 1rem;
+}
+
+.hidden {
+  display: none;
+}

@@ -1,0 +1,104 @@
+[x-cloak] {
+  display: none !important;
+}
+
+.problems-test {
+  width: 100%;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, 11rem);
+  justify-content: center;
+  grid-gap: 10px;
+}
+
+.options {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  border-radius: 3px;
+  margin-top: 10px;
+  color: #fff;
+  transition: all 0.2s ease-in-out;
+  box-shadow: 2px 2px 3px 0px rgba(0, 0, 0, 0.3);
+}
+
+.options:hover {
+  opacity: 0.7;
+}
+
+.options:active {
+  box-shadow: none;
+  transform: scale(0.85);
+}
+
+.option-selected {
+  background-color: #198754 !important; /* Green background to indicate selection */
+  color: white !important;
+  box-shadow: 0px 0px 5px 0px rgba(0, 0, 0, 0.5) !important;
+}
+
+.val1 {
+  background-color: #6181f8;
+}
+
+.val2 {
+  background-color: #f86624;
+}
+
+.val3 {
+  background-color: #fed766;
+}
+
+.wrapper {
+  display: grid;
+  grid-template-columns: 80% 20%;
+  height: 100%;
+}
+
+.equation {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  /* box-shadow: 2px 2px 3px 0px rgba(0, 0, 0, 0.3); */
+  font-size: 5.2vw;
+  background: #fff;
+  border-color: black;
+  /* border-radius: 3px; */
+  text-align: center;
+  margin: 10px 10px 0px 10px;
+}
+
+.equation h1 {
+  display: inline;
+  padding: 20px;
+  font-size: 1em;
+}
+
+.answer-options {
+  font-size: 4vw;
+  margin-right: 10px;
+}
+
+.equation-answer {
+  color: grey;
+}
+
+#worksheet-container {
+  margin-top: 20px;
+}
+
+.problem {
+  font-size: 48pt;
+  padding: 20px;
+  display: inline-block;
+  width: 150px;
+  text-align: center;
+}
+
+@media print {
+  .col:nth-child(36n)::after {
+    content: "";
+    display: block;
+    page-break-after: always;
+  }
+}
