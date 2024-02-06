@@ -62,7 +62,7 @@ def get_math_problem():
 @app.route("/start_game", methods=["POST"])
 def start_game():
     difficulty = request.form["difficulty"]
-    # Here, you would call your partner's microservice to get the math problem
+    # partner's microservice to get the math problem
     # based on difficulty. For now, use the dummy function
     num1, num2 = get_numbers_from_microservice(difficulty)
     math_problem = f"{num1} + {num2}"
@@ -177,10 +177,6 @@ def user(username):
     game_sessions = user.game_sessions.order_by(
         GameSession.session_date.desc()
     )
-
-    # Assuming you have aggregated data stored, simply pass game_sessions to the template
-    # If you need to aggregate data here, make sure your queries are correct and that
-    # session.details contains the expected GameDetail instances
 
     return render_template("user.html", user=user, game_sessions=game_sessions)
 
