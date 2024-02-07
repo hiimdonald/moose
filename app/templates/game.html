@@ -4,6 +4,7 @@
   <div class="container text-center pb-3">
     <div class="row">
       <div class="col">
+        <h5 class="text-dark mb-3 fw-semibold">Choose Your Operation:</h5>
         <div class="col-auto">
           <input
             type="radio"
@@ -31,8 +32,11 @@
           >
         </div>
       </div>
+
       <div class="col">
         <!-- Difficulty Selection -->
+        <h5 class="text-dark fw-semibold mb-3">Choose Your Difficulty:</h5>
+        <!-- Heading for Difficulty Selection -->
 
         <div
           class="btn-group"
@@ -117,6 +121,20 @@
     <button id="submit-answer" class="btn btn-primary mt-3">
       Submit Answer
     </button>
+
+    <div class="align-self-end">
+      <a
+        href="{{ url_for('contact') }}"
+        class="btn btn-warning"
+        role="button"
+        style="
+          --bs-btn-padding-y: 0.25rem;
+          --bs-btn-padding-x: 0.5rem;
+          --bs-btn-font-size: 0.8rem;
+        "
+        ><i class="bi bi-person-raised-hand"></i> Need help? Contact Us!</a
+      >
+    </div>
   </div>
 
   <div class="container my-5">

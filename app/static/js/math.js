@@ -44,7 +44,7 @@ function startGame(difficulty, operation) {
 }
 
 function fetchEquation() {
-  const url = `/api/mock_generate_numbers?difficulty=${currentDifficulty}`;
+  const url = `/microservice/${currentDifficulty}`;
 
   fetch(url)
     .then((response) => response.json())
@@ -75,18 +75,6 @@ function prepareOptions(correctAnswer) {
     options[index].classList.remove("correct", "incorrect", "option-selected");
   });
 }
-
-// function generateOptions(correctAnswer) {
-//   let answers = [correctAnswer];
-//   while (answers.length < 3) {
-//     let option = correctAnswer + Math.floor(Math.random() * 10) - 5;
-//     if (!answers.includes(option)) answers.push(option);
-//   }
-//   return answers.map((value) => ({
-//     value,
-//     isCorrect: value === correctAnswer,
-//   }));
-// }
 
 function generateOptions(correctAnswer) {
   let options = [{ value: correctAnswer, isCorrect: true }];

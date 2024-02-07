@@ -87,3 +87,13 @@ class EmptyForm(FlaskForm):
 class PostForm(FlaskForm):
     post = TextAreaField("Say something", validators=[DataRequired()])
     submit = SubmitField("Submit")
+
+
+class ContactForm(FlaskForm):
+    fullname = StringField("Full Name", validators=[DataRequired()])
+    email = StringField("Email", validators=[DataRequired(), Email()])
+    phone = StringField(
+        "Phone Number"
+    )  # Phone is optional, so no DataRequired validator
+    message = TextAreaField("Message", validators=[DataRequired()])
+    submit = SubmitField("Submit")
