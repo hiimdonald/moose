@@ -1,4 +1,4 @@
-import os
+import zmq
 from datetime import datetime, timezone, timedelta
 from urllib.parse import urlsplit
 from flask import render_template, flash, redirect, url_for, request, jsonify
@@ -16,11 +16,20 @@ from app.models import User, Post, GameDetail, GameSession
 from app.email import send_password_reset_email
 
 
+# ZeroMQ setup
+context = zmq.Context()
+socket = context.socket(zmq.REQ)
+socket.connect("tcp://127.0.0.1:8888")
+
+
+def generate_random_numbers():
+    socket.send_string("generate_numbers")
+    response = socket.recv_json()
+    return response["num1"], response["page_num"], response["num2"]
+
+
 # used for testing only until microservice is available
 import random
-
-
-# send-email?subject=Winter%20is%20Coming&recipient=d.kallail@gmail.com&body=Prepare%20for%20the%20White%20Walkers
 
 
 @app.before_request
