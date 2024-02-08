@@ -13,7 +13,6 @@ from app.forms import (
 )
 from app.models import User, GameSession
 from app.email import send_password_reset_email
-from sqlalchemy.exc import SQLAlchemyError
 
 # Initialize ZeroMQ for communication with microservices
 context = zmq.Context()
@@ -184,7 +183,7 @@ def submit_game():
         data = request.json
         print("Received data:", data)  # Verify data is received correctly
 
-        # Find the most recent session for the current user within the last 24 hours
+        # Find the most recent session for current user within the last 24hrs
         last_24_hours = datetime.now() - timedelta(days=1)
         recent_session = (
             GameSession.query.filter(
@@ -220,6 +219,7 @@ def submit_game():
         # Log the exception and return an error response
         print(f"Error submitting game results: {e}")
         return jsonify({"error": "Failed to submit game results"}), 500
+
 
 @app.route("/about")
 def about():
