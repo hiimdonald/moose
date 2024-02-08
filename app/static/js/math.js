@@ -159,22 +159,22 @@ function submitGameResults() {
     problems_wrong: numWrong,
   };
 
+  console.log("Submitting game results:", data); // Debugging line
+
   fetch("/submit_game", {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
-      "X-CSRFToken": csrfToken, // Use the csrfToken variable here
+      "X-CSRFToken": csrfToken,
     },
     body: JSON.stringify(data),
   })
     .then((response) => response.json())
     .then((data) => {
-      console.log("Success:", data);
-      // Handle success - e.g., display a message or redirect
+      console.log("Success:", data); // Debugging line
     })
     .catch((error) => {
-      console.error("Error:", error);
-      // Handle errors here
+      console.error("Error submitting game results:", error); // Debugging line
     });
 }
 

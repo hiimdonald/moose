@@ -13,6 +13,7 @@ from app.forms import (
 )
 from app.models import User, GameSession
 from app.email import send_password_reset_email
+from sqlalchemy.exc import SQLAlchemyError
 
 # Initialize ZeroMQ for communication with microservices
 context = zmq.Context()
@@ -181,27 +182,44 @@ def submit_game():
     """Submit game results for a user session."""
     try:
         data = request.json
+        print("Received data:", data)  # Verify data is received correctly
+
+        # Find the most recent session for the current user within the last 24 hours
         last_24_hours = datetime.now() - timedelta(days=1)
         recent_session = (
-            GameSession.query.filter_by(user_id=current_user.id)
-            .filter(GameSession.session_date >= last_24_hours)
+            GameSession.query.filter(
+                GameSession.user_id == current_user.id,
+                GameSession.session_date >= last_24_hours,
+            )
             .order_by(GameSession.session_date.desc())
             .first()
         )
 
+        # If a session exists, update it
         if recent_session:
-            recent_session.update_session(data)
+            recent_session.total_problems += data["total_problems"]
+            recent_session.problems_correct += data["problems_correct"]
+            recent_session.problems_wrong += data["problems_wrong"]
         else:
-            new_session = GameSession(user_id=current_user.id, **data)
+            # If no session exists within the last 24 hours, create a new one
+            new_session = GameSession(
+                user_id=current_user.id,
+                session_date=datetime.now(),
+                total_problems=data["total_problems"],
+                problems_correct=data["problems_correct"],
+                problems_wrong=data["problems_wrong"],
+            )
             db.session.add(new_session)
 
+        print("Attempting to commit session")
         db.session.commit()
-        return jsonify(message="Game results submitted successfully!")
+        print("Game results submitted successfully")
+        return jsonify({"message": "Game results submitted successfully!"})
 
     except Exception as e:
+        # Log the exception and return an error response
         print(f"Error submitting game results: {e}")
-        return jsonify(error="Failed to submit game results"), 500
-
+        return jsonify({"error": "Failed to submit game results"}), 500
 
 @app.route("/about")
 def about():
