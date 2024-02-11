@@ -52,7 +52,7 @@
             onchange="startGame('easy', currentOperation)"
             checked
           />
-          <label class="btn btn-outline-primary btn-lg" for="difficultyEasy"
+          <label class="btn btn-outline-success btn-lg" for="difficultyEasy"
             >Easy</label
           >
 
@@ -64,7 +64,7 @@
             autocomplete="off"
             onchange="startGame('medium', currentOperation)"
           />
-          <label class="btn btn-outline-primary btn-lg" for="difficultyMedium"
+          <label class="btn btn-outline-warning btn-lg" for="difficultyMedium"
             >Medium</label
           >
 
@@ -76,7 +76,7 @@
             autocomplete="off"
             onchange="startGame('hard', currentOperation)"
           />
-          <label class="btn btn-outline-primary btn-lg" for="difficultyHard"
+          <label class="btn btn-outline-danger btn-lg" for="difficultyHard"
             >Hard</label
           >
         </div>
@@ -118,9 +118,11 @@
       </div>
     </div>
 
-    <button id="submit-answer" class="btn btn-primary mt-3">
-      Submit Answer
-    </button>
+    <div class="d-grid px-5">
+      <button id="submit-answer" class="btn btn-primary mt-3">
+        Submit Answer
+      </button>
+    </div>
 
     <div class="align-self-end">
       <a
@@ -137,7 +139,7 @@
     </div>
   </div>
 
-  <div class="container my-5">
+  <div class="container my-3">
     <div class="row">
       <div class="col-md-4">
         <div class="card text-white bg-success border-0 mb-3">

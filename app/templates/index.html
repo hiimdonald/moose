@@ -2,24 +2,96 @@
 
 <!-- Custom styles for home -->
 <link href="/static/css/jumbotrons.css" rel="stylesheet" />
+<link href="/static/css/features.css" rel="stylesheet" />
+<link href="/static/css/heroes.css" rel="stylesheet" />
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@docsearch/css@3" />
+<div class="container px-4 py-1">
+  <div class="row flex-lg-row-reverse align-items-center g-5 py-1">
+    <div class="col-10 col-sm-8 col-lg-6">
+      <img
+        src="/static/images/gameplay-homepage.png"
+        class="d-block mx-lg-auto img-fluid"
+        alt="Bootstrap Themes"
+        width="700"
+        height="500"
+        loading="lazy"
+      />
+    </div>
+    <div class="col-lg-6">
+      <h1 class="display-5 fw-bold text-body-emphasis lh-1 mb-3">
+        Welcome to Moose!
+      </h1>
+      <p class="lead">
+        Do you need a little extra help with math facts? Explore a fun game to
+        practice addition and subtraction!
+      </p>
 
-<div class="container my-5">
-  <div class="p-5 text-center bg-body-tertiary rounded-3">
-    <h1 class="text-body-emphasis">Ready to get started?</h1>
-    <p class="col-lg-8 mx-auto fs-5 text-muted">
-      Click below to test your math skills.
-    </p>
-    <div class="d-inline-flex gap-5 mb-5">
-      <a
-        class="d-inline-flex align-items-center btn btn-primary btn-lg px-4 rounded-pill"
+        <a
+        class="d-inline-flex align-items-center btn btn-primary btn-lg px-4"
         href="{{ url_for('game') }}"
         role="button"
       >
         <i class="bi bi-balloon"></i>
 
-        &nbsp; Click here to play!
+        &nbsp; Click Here to Play!
       </a>
+
+      <a
+      class="d-inline-flex align-items-center btn btn-outline-secondary btn-lg px-4"
+      href="{{ url_for('about') }}"
+      role="button"
+    >
+
+      Click Here to Learn More
+    </a>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="container my-3">
+  <div class="container px-4 py-3">
+    <div class="row align-items-md-stretch">
+      <div class="col-md-6">
+        <div class="h-100 p-5 text-bg-dark rounded-3">
+          <h1>Why Use Moose?</h1>
+          <p></p>
+          <p>
+            <i class="bi bi-star-fill"></i>
+            Low Risk Competition for Children
+          </p>
+          <p>
+            <i class="bi bi-star-fill"></i>
+            Increase Student Engagement
+          </p>
+          <p>
+            <i class="bi bi-star-fill"></i>
+            Generate endless math problems
+          </p>
+          <p>
+            <i class="bi bi-star-fill"></i>
+            Stop wasting paper to test math skills
+          </p>
+        </div>
+      </div>
+      <div class="col-md-6">
+        <div class="h-100 p-5 bg-body-tertiary border rounded-3">
+          <h1>Ready to get started?</h1>
+          <p class="fs-4">
+            Add a spark to your Math learning journey and practice your math
+            facts with our interactive Math Quiz.
+          </p>
+
+          <a
+            class="d-inline-flex align-items-center btn btn-primary btn-lg px-4"
+            href="{{ url_for('game') }}"
+            role="button"
+          >
+            <i class="bi bi-balloon"></i>
+
+            &nbsp; Click Here to Play!
+          </a>
+        </div>
+      </div>
     </div>
   </div>
 </div>
