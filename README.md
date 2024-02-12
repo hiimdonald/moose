@@ -27,6 +27,7 @@ Before you begin, ensure you have the following installed:
 - Python (3.6 or later)
 - pip (Python package installer)
 - Git
+- Running microservice.py in a separate terminal
 
 ## Requirements
 
@@ -120,7 +121,14 @@ Before you begin, ensure you have the following installed:
    - This file sets the entry point for the Flask application (`mathy.py`), the environment (development or production), and the port Flask will serve the application on. Adjust `FLASK_APP` to match the name of your main Flask script if it's different from `mathy.py`.
 
 
-### Running the Application
+### Running the Microservice.py Application
+
+- In a separate terminal start the application with:
+    ```bash
+    python microservice.py
+    ```
+
+### Running the Flask Application
 
 - Start the application with:
     ```bash
