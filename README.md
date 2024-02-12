@@ -4,7 +4,7 @@ Welcome to the Moose! This interactive game is designed to make learning math fu
 
 ## Description
 
-Math Game is an educational web application that challenges users with math problems ranging from basic arithmetic to more complex equations. The game is designed to improve problem-solving skills and speed in a fun, interactive way. Whether you're a student looking to sharpen your skills or an adult seeking a quick math refresher, this game is for you.
+Moose is an educational web application that challenges users with addition and subtractions problems with varying difficulties. The game is designed to improve problem-solving skills and speed in a fun, interactive way. Whether you're a student looking to sharpen your skills or an adult seeking a quick math refresher, this game is for you.
 
 ## Features
 
