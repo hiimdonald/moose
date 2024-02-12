@@ -35,91 +35,104 @@ Before you begin, ensure you have the following installed:
 
 ### Installation
 
-1. **Clone the repository**
-
-   ```
-   git clone https://github.com/hiimdonald/moose.git
-   cd moose
-   ```
-
-2. **Create and Activate Virtual Environment** *(Optional, but recommended)*
-    [flask installation guide](https://flask.palletsprojects.com/en/3.0.x/installation/)
-
-    ```
-    For macOS/Linux:
-        1. python3 -m venv .venv
-        2. . .venv/bin/activate
+1. **Clone the Repository**
+    ```bash
+    git clone https://github.com/hiimdonald/moose.git
+    cd moose
     ```
 
-3. **Install required packages**
+2. **Create and Activate a Virtual Environment** (Optional, but recommended)
+    - For macOS/Linux:
+        ```bash
+        python3 -m venv .venv
+        source .venv/bin/activate
+        ```
+    - For Windows:
+        ```bash
+        python -m venv .venv
+        .venv\Scripts\activate
+        ```
 
-    ```
+3. **Install Required Packages**
+    ```bash
     pip install -r requirements.txt
     ```
 
-4. **Create .env file in main directory**
+### Configuration
 
-    ```
-    # Replace SECRET_KEY, MAIL_USERNAME, MAIL_PASSWORD, and ADMINS
-
-    SECRET_KEY="YOURSECRETKEY"
-
-    MAIL_SERVER="smtp.gmail.com"
-    MAIL_PORT=465
-    MAIL_USE_TLS="False"
-    MAIL_USE_SSL="True"
-    MAIL_USERNAME="<your-gmail-email>"
-    MAIL_PASSWORD="<your-google-app-password>"
-
-    ADMINS="<your-gmail-email>"
-    ```
+4. **Environment Variables**
+    - Create a `.env` file in the main directory and replace placeholders with your actual data.
+        ```plaintext
+        SECRET_KEY="YOUR_SECRET_KEY"
+        MAIL_SERVER="smtp.gmail.com"
+        MAIL_PORT=465
+        MAIL_USE_TLS=False
+        MAIL_USE_SSL=True
+        MAIL_USERNAME="your-email@gmail.com"
+        MAIL_PASSWORD="your-email-password"
+        ADMINS="your-email@gmail.com"
+        ```
 
 
-5. **Create config.py file in main directory**
+5. **Application Configuration**
+    - Create a `config.py` file in the main directory with the following content:
+        ```python
+        import os
+        from dotenv import load_dotenv
 
-    ```
-    # Example config.py
-
-    import os
-    from dotenv import load_dotenv
-
-    basedir = os.path.abspath(os.path.dirname(__file__))
-    load_dotenv(os.path.join(basedir, ".env"))
+        basedir = os.path.abspath(os.path.dirname(__file__))
+        load_dotenv(os.path.join(basedir, ".env"))
 
 
-    class Config:
-        SECRET_KEY = os.environ.get("SECRET_KEY") or "you-will-never-guess"
-        SQLALCHEMY_DATABASE_URI = os.environ.get(
-            "DATABASE_URL"
-        ) or "sqlite:///" + os.path.join(basedir, "app.db")
+        class Config:
+            SECRET_KEY = os.environ.get("SECRET_KEY") or "you-will-never-guess"
+            SQLALCHEMY_DATABASE_URI = os.environ.get(
+                "DATABASE_URL"
+            ) or "sqlite:///" + os.path.join(basedir, "app.db")
 
-        SQLALCHEMY_TRACK_MODIFICATIONS = False
+            SQLALCHEMY_TRACK_MODIFICATIONS = False
+            MAIL_SERVER = os.environ.get("MAIL_SERVER")
+            MAIL_PORT = os.environ.get(("MAIL_PORT") or 25)
+            MAIL_USE_SSL = os.environ.get("MAIL_USE_SSL") == "True"
+            MAIL_USERNAME = os.environ.get("MAIL_USERNAME")
+            MAIL_PASSWORD = os.environ.get("MAIL_PASSWORD")
+            ADMINS = os.environ.get("ADMINS")
+        ```
 
-        MAIL_SERVER = os.environ.get("MAIL_SERVER")
-        MAIL_PORT = os.environ.get("MAIL_PORT")
-        MAIL_USE_SSL = os.environ.get("MAIL_USE_SSL")
-        MAIL_USERNAME = os.environ.get("MAIL_USERNAME")
-        MAIL_PASSWORD = os.environ.get("MAIL_PASSWORD")
-        ADMINS = os.environ.get("ADMINS")
-    ```
+6. **Database Initialization and Migration**
+    - Initialize and migrate the database with the following commands:
+        ```bash
+        flask db init
+        flask db migrate -m "users and gameplay tables"
+        flask db upgrade
+        ```
+### Flask Environment Configuration (Optional)
 
-6. **Create and Migrate Database**
-In the command terminal
-    ```
-    1. (venv) $ flask db init
-    2. (venv) $ flask db migrate -m "users and gameplay tables"
-    3. (venv) $ flask db upgrade
-    ```
+7. **Set Flask Environment Variables**
+   - Creating a `.flaskenv` file in the main project directory can simplify the process of setting environment variables for Flask. This step is optional but can make running the application easier. Add the following lines to your `.flaskenv` file:
 
-7. **Create .flaskenv file in mail directory** (optional)
-
-    ```
+    ```plaintext
     FLASK_APP=mathy.py
-    FLASK_DEBUG=0
+    FLASK_ENV=development  # Use 'development' for debug mode or 'production' for production mode
     FLASK_RUN_PORT=8000
     ```
 
-8. **Run the app to start playing**
+   - This file sets the entry point for the Flask application (`mathy.py`), the environment (development or production), and the port Flask will serve the application on. Adjust `FLASK_APP` to match the name of your main Flask script if it's different from `mathy.py`.
+
+
+### Running the Application
+
+- Start the application with:
+    ```bash
+    flask run
     ```
-    (venv) $ flask run
-    ```
+- Access the game at `http://127.0.0.1:8000/` in your web browser.
+
+
+## Security
+
+Ensure your `.env` file containing sensitive information like email credentials and secret keys is secure and never commit it to a public repository.
+
+## Support
+
+For support, please open an issue in the [GitHub issues page](https://github.com/hiimdonald/moose/issues).
