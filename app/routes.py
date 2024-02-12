@@ -52,7 +52,7 @@ def get_numbers_from_microservice(difficulty):
 @app.route("/game")
 def game():
     """Render the game page."""
-    return render_template("game.html")
+    return render_template("game.html", title="Game")
 
 
 @app.route("/login", methods=["GET", "POST"])
@@ -151,7 +151,9 @@ def user(username):
     game_sessions = user.game_sessions.order_by(
         GameSession.session_date.desc()
     )
-    return render_template("user.html", user=user, game_sessions=game_sessions)
+    return render_template(
+        "user.html", user=user, game_sessions=game_sessions, title=username
+    )
 
 
 @app.route("/edit_profile", methods=["GET", "POST"])
@@ -224,10 +226,10 @@ def submit_game():
 @app.route("/about")
 def about():
     """Render the about page."""
-    return render_template("about.html")
+    return render_template("about.html", title="About")
 
 
 @app.route("/contact")
 def contact():
     """Render the contact page."""
-    return render_template("contact.html")
+    return render_template("contact.html", title="Contact")
