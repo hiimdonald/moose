@@ -185,7 +185,7 @@ def submit_game():
         data = request.json
         print("Received data:", data)  # Verify data is received correctly
 
-        # Find the most recent session for current user within the last 24hrs
+        # Find the most recent session for the current user within last 24hrs
         last_24_hours = datetime.now() - timedelta(days=1)
         recent_session = (
             GameSession.query.filter(
@@ -198,6 +198,10 @@ def submit_game():
 
         # If a session exists, update it
         if recent_session:
+            print(
+                f"Found recent session: ID {recent_session.id}, Date {recent_session.session_date}"
+            )
+
             recent_session.total_problems += data["total_problems"]
             recent_session.problems_correct += data["problems_correct"]
             recent_session.problems_wrong += data["problems_wrong"]

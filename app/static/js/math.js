@@ -5,6 +5,8 @@ let numCorrect = 0,
   numWrong = 0,
   score = 0;
 let selectedOption = null; // Keep track of the selected option
+let lastSubmittedCorrect = 0,
+  lastSubmittedWrong = 0;
 
 const csrfToken = document
   .querySelector('meta[name="csrf-token"]')
@@ -153,13 +155,17 @@ function resetDisplayForNewQuestion() {
 }
 
 function submitGameResults() {
+  // Calculate incremental updates since last submission
+  const incrementalCorrect = numCorrect - lastSubmittedCorrect;
+  const incrementalWrong = numWrong - lastSubmittedWrong;
+
   const data = {
-    total_problems: numCorrect + numWrong,
-    problems_correct: numCorrect,
-    problems_wrong: numWrong,
+    total_problems: incrementalCorrect + incrementalWrong,
+    problems_correct: incrementalCorrect,
+    problems_wrong: incrementalWrong,
   };
 
-  console.log("Submitting game results:", data); // Debugging line
+  console.log("Submitting incremental game results:", data);
 
   fetch("/submit_game", {
     method: "POST",
@@ -171,11 +177,20 @@ function submitGameResults() {
   })
     .then((response) => response.json())
     .then((data) => {
-      console.log("Success:", data); // Debugging line
+      console.log("Success:", data);
+      // Update last submitted counters
+      lastSubmittedCorrect = numCorrect;
+      lastSubmittedWrong = numWrong;
     })
     .catch((error) => {
-      console.error("Error submitting game results:", error); // Debugging line
+      console.error("Error submitting game results:", error);
     });
+}
+
+function updateScoreDisplay() {
+  document.getElementById("correct-count").textContent = numCorrect;
+  document.getElementById("incorrect-count").textContent = numWrong;
+  document.getElementById("score").textContent = "0%"; // Reset score display
 }
 
 // Initially start the game
