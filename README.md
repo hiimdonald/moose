@@ -181,3 +181,5 @@ Upon sending a request, the microservice will respond with a JSON object contain
 
 
 [^1]: Per partners API docs.
+
+![UML](https://github.com/hiimdonald/moose/assets/4016508/a9515286-48ca-401e-9695-c8c351919d82)
