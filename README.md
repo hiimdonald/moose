@@ -103,9 +103,7 @@ Before you begin, ensure you have the following installed:
 6. **Database Initialization and Migration**
     - Initialize and migrate the database with the following commands:
         ```bash
-        flask db init
-        flask db migrate -m "users and gameplay tables"
-        flask db upgrade
+        flask setup-db
         ```
 ### Flask Environment Configuration (Optional)
 
@@ -141,6 +139,45 @@ Before you begin, ensure you have the following installed:
 
 Ensure your `.env` file containing sensitive information like email credentials and secret keys is secure and never commit it to a public repository.
 
-## Support
+# Microservice Communication Contract
 
-For support, please open an issue in the [GitHub issues page](https://github.com/hiimdonald/moose/issues).
+This document outlines the communication contract for the microservice implemented to support random data generation for a Flask-based web application. My microservice uses the ZeroMQ(ZMQ) communication pipeline.
+
+### A. How to Request Data
+
+Establish a ZeroMQ REQ socket and connect to the microservice endpoint. Send a string message "generate_numbers" to request random number generation. Await a JSON response containing the generated numbers.
+
+- Setup ZeroMQ context and REQ socket:
+    ```bash
+    import zmq
+
+    context = zmq.Context()
+    socket = context.socket(zmq.REQ)
+    socket.connect("tcp://127.0.0.1:5555")
+    ```
+
+- Request data:
+    ```bash
+
+    socket.send_string("generate_numbers")
+    ```
+
+### B. How to Receive Data
+
+Upon sending a request, the microservice will respond with a JSON object containing three keys: num1, page_num, and num2, each associated with a randomly generated number. 
+
+- Receive response:
+    ```bash
+    response = socket.recv_json()
+    print(response)  # Output: {'num1': <number>, 'page_num': <number>, 'num2': <number>}
+    ```
+
+
+- How to interpret the response:
+    - num1: A random number between 1 and 933, inclusive.
+    - page_num: A random number between 1 and 3, inclusive.
+    - num2: A random number between 1 and 1000, inclusive. 
+        - If page_num is 3, num2 will be between 1 and 384, inclusive.[^1] 
+
+
+[^1]: Per partners API docs.

@@ -187,11 +187,5 @@ function submitGameResults() {
     });
 }
 
-function updateScoreDisplay() {
-  document.getElementById("correct-count").textContent = numCorrect;
-  document.getElementById("incorrect-count").textContent = numWrong;
-  document.getElementById("score").textContent = "0%"; // Reset score display
-}
-
 // Initially start the game
 startGame(currentDifficulty, currentOperation);

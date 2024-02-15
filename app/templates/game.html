@@ -81,7 +81,41 @@
           >
         </div>
       </div>
-      <div class="col"></div>
+      <div class="col">
+        <div class="col">
+          <h5 class="text-dark mb-3 fw-semibold">Set Your Timer:</h5>
+          <div class="btn-group" role="group" aria-label="Timer selection">
+            <button
+              type="button"
+              class="btn btn-outline-primary btn-lg"
+              onclick="setTimer(1)"
+            >
+              1 Min
+            </button>
+            <button
+              type="button"
+              class="btn btn-outline-primary btn-lg"
+              onclick="setTimer(2)"
+            >
+              2 Mins
+            </button>
+          </div>
+          <!-- Stop Button -->
+          <button
+            type="button"
+            class="btn btn-outline-danger btn-lg"
+            onclick="stopTimer()"
+          >
+            Stop
+          </button>
+
+          <div class="col">
+            <h5 class="text-dark mb-3 fw-semibold">
+              Time Remaining: <span id="timerDisplay"></span>
+            </h5>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 
@@ -169,6 +203,7 @@
   </div>
 
   <script src="{{ url_for('static', filename='js/math.js') }}"></script>
+  <script src="{{ url_for('static', filename='js/timer.js') }}"></script>
 
   {% endblock %}
 </div>

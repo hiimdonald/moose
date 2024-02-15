@@ -55,4 +55,4 @@ if not app.debug:
     app.logger.setLevel(logging.INFO)
     app.logger.info("Mathy startup")
 
-from app import routes, models, errors
+from app import routes, models, errors, commands
