@@ -101,7 +101,7 @@ Before you begin, ensure you have the following installed:
         ```
 
 6. **Database Initialization and Migration**
-    - Initialize and migrate the database with the following commands:
+    - Initialize and migrate the database with the following command:
         ```bash
         flask setup-db
         ```
