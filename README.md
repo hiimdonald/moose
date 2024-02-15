@@ -141,7 +141,7 @@ Ensure your `.env` file containing sensitive information like email credentials 
 
 # Microservice Communication Contract
 
-This document outlines the communication contract for the microservice implemented to support random data generation for a Flask-based web application. My microservice uses the ZeroMQ(ZMQ) communication pipeline.
+This document outlines the communication contract for the microservice implemented to support random data generation for a Flask-based web application. My partner will import the ZMQ module to their app, and then setup a request socket as described below:
 
 ### A. How to Request Data
 
