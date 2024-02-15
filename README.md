@@ -164,22 +164,18 @@ Establish a ZeroMQ REQ socket and connect to the microservice endpoint. Send a s
 
 ### B. How to Receive Data
 
-Upon sending a request, the microservice will respond with a JSON object containing three keys: num1, page_num, and num2, each associated with a randomly generated number. 
+Upon sending a request, the microservice will respond with a JSON object containing two keys: num1 and num2, each associated with a randomly generated number. 
 
 - Receive response:
     ```bash
     response = socket.recv_json()
-    print(response)  # Output: {'num1': <number>, 'page_num': <number>, 'num2': <number>}
+    print(response)  # Output: {'num1': <number>, 'num2': <number>}
     ```
 
 
 - How to interpret the response:
     - num1: A random number between 1 and 933, inclusive.
-    - page_num: A random number between 1 and 3, inclusive.
-    - num2: A random number between 1 and 1000, inclusive. 
-        - If page_num is 3, num2 will be between 1 and 384, inclusive.[^1] 
+    - num2: A random number between 1 and 2384, inclusive. 
 
-
-[^1]: Per partners API docs.
 
 ![UML](https://github.com/hiimdonald/moose/assets/4016508/a9515286-48ca-401e-9695-c8c351919d82)
