@@ -177,5 +177,6 @@ Upon sending a request, the microservice will respond with a JSON object contain
     - num1: A random number between 1 and 933, inclusive.
     - num2: A random number between 1 and 2384, inclusive. 
 
+### C. UML Sequence Diagram
 
 ![UML](https://github.com/hiimdonald/moose/assets/4016508/a9515286-48ca-401e-9695-c8c351919d82)
